@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="じゃんけんゲーム" content="じゃんけんで勝負しよう">
+    <title>Vue js</title>
+<style>
+    body {
+background-color: blanchedalmond;
+} 
+h1 {
+    margin: 80px 0 20px;
+    text-align: center;
+}
+.button-area {
+    margin: auto;
+    padding-top: 60px;
+    text-align: center;
+}
+.cpu {
+    margin: auto;
+    text-align: center;
+}
+button {
+    width:200px;
+    height:80px;
+}
+</style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ result }}</h1>
+        <!--敵の手-->
+        <div class = "cpu"><img v-bind:src="enemyHandImage"></div>
+        <!--自分の手-->
+        <div class = "button-area">
+        <button @click="fight('goo')">グーにします</button>
+        <button v-on:click="fight('choki')">チョキにします</button>
+        <button v-on:click="fight('paa')">パーにします</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                hand: ['goo', 'choki', 'paa'],
+                enemyHand: '',
+                enemyHandImage: '',
+                result: 'じゃんけんで勝負だよ！！！' 
+            },
+            methods: {
+                fight: function(myHand) {
+                    var index = Math.floor(Math.random() * Math.floor(3));
+                    this.enemyHand = this.hand[index];
+
+                    if (this.enemyHand === 'goo') {
+                        this.enemyHandImage = 'image/goo.png';
+                    } else if (this.enemyHand === 'choki') {
+                        this.enemyHandImage = 'image/choki.png';
+                    } else if (this.enemyHand === 'paa') {
+                        this.enemyHandImage = 'image/paa.png';
+                    } 
+                 
+                    console.log('敵の手： ' +this.enemyHand);
+                    console.log('自分の手： ' +myHand);
+
+                    if (myHand === this.enemyHand) {
+                        console.log('あー、引き分けか。。。もう１回勝負しよう！');
+                        this.result = 'あー、引き分けか。。。もう１回勝負しよう！';
+                    }
+                    
+                    //勝ち判定
+                    if (this.enemyHand === 'goo' && myHand === 'paa') {
+                        console.log('すごいです！　あなたの勝ちです！！！');
+                        this.result = 'すごいです！　あなたの勝ちです！！！';
+                    }
+                    if (this.enemyHand === 'choki' && myHand === 'goo') {
+                        console.log('すごいです！　あなたの勝ちです！！！');
+                        this.result = 'すごいです！　あなたの勝ちです！！！';
+                    }
+                    if (this.enemyHand === 'paa' && myHand === 'choki') {
+                        console.log('すごいです！　あなたの勝ちです！！！');
+                        this.result = 'すごいです！　あなたの勝ちです！！！';
+                    }
+
+                    //負け判定
+                    if (this.enemyHand === 'goo' && myHand === 'choki') {
+                        console.log('はははっ！　残念でした！　あなたの負けだよ！');
+                        this.result = 'はははっ！　残念でした！　あなたの負けだよ！';
+                    }
+                    if (this.enemyHand === 'choki' && myHand === 'paa') {
+                        console.log('はははっ！　残念でした！　あなたの負けだよ！');
+                        this.result = 'はははっ！　残念でした！　あなたの負けだよ！';
+                    }
+                    if (this.enemyHand === 'paa' && myHand === 'goo') {
+                        console.log('はははっ！　残念でした！　あなたの負けだよ！');
+                        this.result = 'はははっ！　残念でした！　あなたの負けだよ！';
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
